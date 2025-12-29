@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cairo Care</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="page-auth">
+    <nav class="navbar">
+        <div class="brand">
+            <img src="assets/logo.png" alt="Cairo Care Logo" class="brand-logo">
+            Cairo Care
+        </div>
+        <div id="nav-links">
+            <a href="index.html" data-i18n="home">Home</a>
+            <a href="register.html" data-i18n="register">Register</a>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 500px; margin: 50px auto;"> <!-- Centered -->
+        <div class="card">
+            <h2 class="text-center" data-i18n="login_header">Login</h2>
+            <div id="alert-box" class="text-center" style="color: red; margin-bottom: 15px;"></div>
+            <form id="login-form" autocomplete="off">
+                <div class="form-group">
+                    <label data-i18n="email">Email</label>
+                    <input type="email" name="email" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="password">Password</label>
+                    <input type="password" name="password" required autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%" data-i18n="login_btn">Login</button>
+            </form>
+            <p class="text-center mt-3"><span data-i18n="dont_have_account">Don't have an account?</span> <a
+                    href="register.html" data-i18n="register" style="margin: 0 5px;">Register</a></p>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js?v=3.4"></script>
+    <script src="assets/js/auth.js?v=3.4"></script>
+</body>
+
+</html>

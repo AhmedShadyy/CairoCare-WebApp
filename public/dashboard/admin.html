@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Cairo Care</title>
+    <link rel="stylesheet" href="../assets/css/style.css?v=3.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="page-admin">
+    <nav class="navbar">
+        <div class="brand">
+            <img src="/assets/logo.png" alt="Cairo Care Logo" class="brand-logo">
+            Cairo Care <span
+                style="font-size: 0.8em; font-weight: normal; background: var(--primary-color); color: white; padding: 2px 8px; border-radius: 4px; margin-left: 5px;">Admin</span>
+        </div>
+        <div id="nav-links"></div>
+    </nav>
+
+    <div class="main-layout" style="display: flex; min-height: calc(100vh - 60px);">
+        <!-- Sidebar -->
+        <div class="sidebar"
+            style="width: 250px; background: var(--bg-card); border-right: 1px solid var(--border-color); padding: 20px;">
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 15px;">
+                    <a href="#" onclick="showSection('overview')"
+                        style="display: block; padding: 10px; color: var(--text-color); text-decoration: none; border-radius: 5px;"
+                        class="sidebar-link active" data-id="overview" data-i18n="system_overview">Overview</a>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <a href="#" onclick="showSection('patients')" <a href="#" onclick="showSection('patients')"
+                        style="display: block; padding: 10px; color: var(--text-color); text-decoration: none; border-radius: 5px;"
+                        class="sidebar-link" data-id="patients" data-i18n="patients">Patients</a>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <a href="#" onclick="showSection('doctors')"
+                        style="display: block; padding: 10px; color: var(--text-color); text-decoration: none; border-radius: 5px;"
+                        class="sidebar-link" data-id="doctors" data-i18n="doctors">Doctors</a>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <a href="#" onclick="showSection('appointments')"
+                        style="display: block; padding: 10px; color: var(--text-color); text-decoration: none; border-radius: 5px;"
+                        class="sidebar-link" data-id="appointments" data-i18n="appointments">Appointments</a>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <a href="#" onclick="showSection('approvals')"
+                        style="display: block; padding: 10px; color: var(--text-color); text-decoration: none; border-radius: 5px;"
+                        class="sidebar-link" data-id="approvals" data-i18n="pending_approvals">Approvals</a>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <a href="#" onclick="showSection('profile')"
+                        style="display: block; padding: 10px; color: var(--text-color); text-decoration: none; border-radius: 5px;"
+                        class="sidebar-link" data-id="profile" data-i18n="my_profile">My Profile</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content" style="flex: 1; padding: 20px; overflow-y: auto;">
+
+            <!-- OVERVIEW -->
+            <div id="section-overview">
+                <h2 data-i18n="system_overview" class="mb-3">System Overview</h2>
+                <div class="grid mb-3" id="stats-grid">
+                    <!-- Stats loaded here -->
+                </div>
+            </div>
+
+            <!-- PATIENTS -->
+            <div id="section-patients" style="display: none;">
+                <h2 data-i18n="patients" class="mb-3">Patients</h2>
+                <div class="card">
+                    <table class="w-100">
+                        <thead>
+                            <tr>
+                                <th data-i18n="name">Name</th>
+                                <th data-i18n="email">Email</th>
+                                <th data-i18n="phone">Phone</th>
+                                <th data-i18n="dob">DOB</th>
+                                <th data-i18n="joined">Joined</th>
+                                <th data-i18n="actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patients-list"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- DOCTORS -->
+            <div id="section-doctors" style="display: none;">
+                <h2 data-i18n="doctors" class="mb-3">Doctors</h2>
+                <div id="doctors-container" class="grid-gap-20">
+                    <!-- Specialty Cards will be injected here -->
+                </div>
+            </div>
+
+            <!-- APPOINTMENTS -->
+            <div id="section-appointments" style="display: none;">
+                <h2 data-i18n="appointments" class="mb-3">Appointments</h2>
+                <div class="card">
+                    <table class="w-100">
+                        <thead>
+                            <tr>
+                                <th data-i18n="doctor">Doctor</th>
+                                <th data-i18n="specialization">Specialization</th>
+                                <th data-i18n="patient">Patient</th>
+                                <th data-i18n="date">Date</th>
+                                <th data-i18n="time">Time</th>
+                                <th class="text-center" data-i18n="status">Status</th>
+                                <th class="text-center" data-i18n="actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-appointments-list"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- APPROVALS -->
+            <div id="section-approvals" style="display: none;">
+                <h2 data-i18n="pending_approvals" class="mb-3">Pending Approvals</h2>
+                <div id="pending-doctors-list" class="grid">
+                    <!-- Cards -->
+                </div>
+            </div>
+
+            <!-- PROFILE -->
+            <div id="section-profile" style="display: none;">
+                <h2 data-i18n="my_profile" class="mb-3">My Profile</h2>
+                <div class="profile-card">
+                    <div class="profile-grid">
+                        <div class="profile-item">
+                            <span class="profile-label" data-i18n="full_name">Full Name</span>
+                            <div class="profile-value"><span id="disp-name"></span></div>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label" data-i18n="email">Email</span>
+                            <div class="profile-value"><span id="disp-email"></span></div>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label" data-i18n="phone">Phone</span>
+                            <div class="profile-value">
+                                <span id="disp-phone"></span>
+                                <button class="btn-edit" onclick="editField('phone')">✎ <span
+                                        data-i18n="edit">Edit</span></button>
+                            </div>
+                            <div id="edit-phone" class="edit-mode" style="display:none;">
+                                <input type="text" id="input-phone">
+                                <div class="mt-2 d-flex gap-2 justify-end">
+                                    <button class="btn btn-sm btn-secondary" onclick="cancelEdit('phone')"
+                                        data-i18n="cancel">Cancel</button>
+                                    <button class="btn btn-sm btn-success" onclick="saveField('phone')"
+                                        data-i18n="save_changes">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js?v=3.0"></script>
+    <script src="../assets/js/admin.js?v=3.0"></script>
+</body>
+
+</html>

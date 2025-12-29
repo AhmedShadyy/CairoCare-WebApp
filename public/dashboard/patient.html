@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - Cairo Care</title>
+    <link rel="stylesheet" href="../assets/css/style.css?v=3.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="page-patient">
+    <nav class="navbar">
+        <div class="brand">
+            <img src="/assets/logo.png" alt="Cairo Care Logo" class="brand-logo">
+            Cairo Care
+        </div>
+        <div id="nav-links">
+            <!-- Filled by main.js -->
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <!-- Profile Section -->
+        <div id="section-profile" style="display: none;">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <h2 data-i18n="my_profile">My Profile</h2>
+                </div>
+
+                <div class="profile-grid">
+                    <!-- Name -->
+                    <div class="profile-item">
+                        <span class="profile-label" data-i18n="full_name">Full Name</span>
+                        <div class="profile-value">
+                            <span id="disp-name"></span>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="profile-item">
+                        <span class="profile-label" data-i18n="email">Email</span>
+                        <div class="profile-value">
+                            <span id="disp-email"></span>
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="profile-item">
+                        <span class="profile-label" data-i18n="phone">Phone</span>
+                        <div class="profile-value">
+                            <span id="disp-phone"></span>
+                            <button class="btn-edit" onclick="editField('phone')">✎ <span
+                                    data-i18n="edit">Edit</span></button>
+                        </div>
+                        <div id="edit-phone" class="edit-mode" style="display:none;">
+                            <input type="text" id="input-phone">
+                            <div class="mt-2 d-flex gap-2 justify-end">
+                                <button class="btn btn-sm btn-secondary" onclick="cancelEdit('phone')"
+                                    data-i18n="cancel">Cancel</button>
+                                <button class="btn btn-sm btn-success" onclick="saveField('phone')"
+                                    data-i18n="save_changes">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DOB -->
+                    <div class="profile-item">
+                        <span class="profile-label" data-i18n="dob">Date of Birth</span>
+                        <div class="profile-value">
+                            <span id="disp-date_of_birth"></span>
+                        </div>
+                    </div>
+
+                    <!-- Address Removed -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Find Doctor Section -->
+        <div id="section-find-doctor">
+            <h2 data-i18n="find_doctor">Find a Doctor</h2>
+            <div id="doctors-list" class="grid mb-3">
+                <!-- Doctors loaded here -->
+            </div>
+        </div>
+
+        <!-- My Appointments Section -->
+        <div id="section-my-appointments" style="display: none;">
+            <h3 data-i18n="my_appointments">My Appointments</h3>
+            <div class="card">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-i18n="doctor">Doctor</th>
+                                <th data-i18n="date">Date</th>
+                                <th data-i18n="time">Time</th>
+                                <th data-i18n="status">Status</th>
+                                <th data-i18n="description_header">Reason</th>
+                                <th data-i18n="report">Report</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointments-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal"
+        style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 2000;">
+        <div class="card" style="width: 100%; max-width: 500px; position: relative; margin: 20px;">
+            <button onclick="closeModal()"
+                style="position: absolute; right: 20px; top: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h3 class="text-center mb-3" data-i18n="book_appointment">Book Appointment</h3>
+            <form id="booking-form">
+                <input type="hidden" name="doctor_id" id="modal-doctor-id">
+                <div class="form-group">
+                    <label data-i18n="doctor">Doctor</label>
+                    <input type="text" id="modal-doctor-name" readonly style="background-color: #f1f1f1; color: #333;">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="date">Date</label>
+                    <input type="date" name="appointment_date" required>
+                </div>
+                <!-- Description Field -->
+                <div class="form-group">
+                    <label data-i18n="description_header">Description / Reason</label>
+                    <textarea name="description" rows="3"
+                        placeholder="Briefly describe your condition or reason for visit"
+                        data-i18n="description_placeholder"></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="time">Time</label>
+                    <input type="time" name="appointment_time" required>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="medical_report_optional">Medical Report (Optional)</label>
+                    <input type="file" name="report" accept="image/*,application/pdf">
+                </div>
+                <button type="submit" class="btn btn-primary w-100" data-i18n="confirm_booking">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js?v=4.0"></script>
+    <script src="../assets/js/patient.js?v=4.0"></script>
+</body>
+
+</html>

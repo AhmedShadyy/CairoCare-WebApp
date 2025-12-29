@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Cairo Care</title>
+    <link rel="stylesheet" href="../assets/css/style.css?v=3.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="page-doctor">
+    <nav class="navbar">
+        <div class="brand">
+            <img src="/assets/logo.png" alt="Cairo Care Logo" class="brand-logo">
+            Cairo Care
+        </div>
+        <div id="nav-links"></div>
+    </nav>
+
+    <div class="container mt-3">
+        <!-- Profile Section -->
+        <div id="section-profile" style="display: none;">
+            <div class="profile-card">
+                <!-- Header removed for consistency if patient title is deleted, 
+                     but user only said delete title from patient. 
+                     However, usually "same format" implies same header style. 
+                     I'll keep the header for doctor unless explicitly asked to delete, 
+                     OR I'll better align it. 
+                     Actually, looking at the patient screenshot, the user liked the "format" (grid). 
+                     The user specifically said "delete the title field from the patient section".
+                     I will leave the header in Doctor for now unless it looks bad, 
+                     but if I'm applying the "same format", maybe I should check if the header is part of that format.
+                     The patient screenshot has "ملفي الشخصي" centered. The user says "Delete the title field".
+                     So the patient view will NOT have it. 
+                     I will apply the GRID to doctor. I will delete the header from doctor too to match "same format" exactly? 
+                     Let's play it safe: keep header for doctor, delete for patient (explicit request). 
+                     If the user wants it gone for doctor they'll say.
+                -->
+                <div class="profile-header">
+                    <h2 data-i18n="my_profile">My Profile</h2>
+                </div>
+
+                <div class="profile-grid">
+                    <!-- Name -->
+                    <div class="profile-item">
+                        <span class="profile-label" data-i18n="full_name">Full Name</span>
+                        <div class="profile-value">
+                            <span id="disp-name"></span>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="profile-item">
+                        <span class="profile-label" data-i18n="email">Email</span>
+                        <div class="profile-value">
+                            <span id="disp-email"></span>
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="profile-item">
+                        <span class="profile-label" data-i18n="phone">Phone</span>
+                        <div class="profile-value">
+                            <span id="disp-phone"></span>
+                            <button class="btn-edit" onclick="editField('phone')">✎ <span
+                                    data-i18n="edit">Edit</span></button>
+                        </div>
+                        <div id="edit-phone" class="edit-mode" style="display:none;">
+                            <input type="text" id="input-phone">
+                            <div class="mt-2 d-flex gap-2 justify-end">
+                                <button class="btn btn-sm btn-secondary" onclick="cancelEdit('phone')"
+                                    data-i18n="cancel">Cancel</button>
+                                <button class="btn btn-sm btn-success" onclick="saveField('phone')"
+                                    data-i18n="save_changes">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DOB Removed -->
+
+                    <!-- Specialization (Doctor Specific) -->
+                    <div class="profile-item">
+                        <span class="profile-label" data-i18n="specialization">Specialization</span>
+                        <div class="profile-value">
+                            <span id="disp-specialization"></span>
+                        </div>
+                    </div>
+
+                    <!-- Fees (Doctor Specific) -->
+                    <div class="profile-item">
+                        <span class="profile-label" data-i18n="fees">Fees (EGP)</span>
+                        <div class="profile-value">
+                            <span id="disp-consultation_fee"></span>
+                            <button class="btn-edit" onclick="editField('consultation_fee')">✎ <span
+                                    data-i18n="edit">Edit</span></button>
+                        </div>
+                        <div id="edit-consultation_fee" class="edit-mode" style="display:none;">
+                            <input type="number" id="input-consultation_fee">
+                            <div class="mt-2 d-flex gap-2 justify-end">
+                                <button class="btn btn-sm btn-secondary" onclick="cancelEdit('consultation_fee')"
+                                    data-i18n="cancel">Cancel</button>
+                                <button class="btn btn-sm btn-success" onclick="saveField('consultation_fee')"
+                                    data-i18n="save_changes">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bio (Doctor Specific - Full Width) -->
+                    <div class="profile-item" style="grid-column: 1 / -1;">
+                        <span class="profile-label" data-i18n="bio">Bio</span>
+                        <div class="profile-value">
+                            <p id="disp-bio" style="font-size: 0.95rem; font-weight: normal; margin:0; width: 100%;">
+                            </p>
+                            <button class="btn-edit" onclick="editField('bio')">✎ <span
+                                    data-i18n="edit">Edit</span></button>
+                        </div>
+                        <div id="edit-bio" class="edit-mode" style="display:none;">
+                            <textarea id="input-bio" rows="4"></textarea>
+                            <div class="mt-2 d-flex gap-2 justify-end">
+                                <button class="btn btn-sm btn-secondary" onclick="cancelEdit('bio')"
+                                    data-i18n="cancel">Cancel</button>
+                                <button class="btn btn-sm btn-success" onclick="saveField('bio')"
+                                    data-i18n="save_changes">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Availability Section -->
+        <div id="section-manage-availability">
+            <h2 data-i18n="manage_availability">Manage Availability</h2>
+            <div class="card mb-3">
+                <form id="slot-form" class="d-flex gap-2" style="align-items: flex-end; flex-wrap: wrap;">
+                    <div class="form-group" style="flex: 1; min-width: 150px; margin-bottom: 0;">
+                        <label data-i18n="day">Day</label>
+                        <select name="day">
+                            <!-- Filled by JS -->
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 120px; margin-bottom: 0;">
+                        <label data-i18n="start_time">Start Time</label>
+                        <input type="time" name="startTime" required>
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 120px; margin-bottom: 0;">
+                        <label data-i18n="end_time">End Time</label>
+                        <input type="time" name="endTime" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-i18n="add_slot">Add Slot</button>
+                </form>
+                <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid var(--border-color);">
+                <div id="slots-list" class="d-flex gap-2" style="flex-wrap: wrap;">
+                    <!-- Slots will be badges here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointment Requests Section -->
+        <div id="section-appointment-requests" style="display: none;">
+            <h3 class="mt-3" data-i18n="appointment_requests">Appointments Requests</h3>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="patient">Patient</th>
+                            <th data-i18n="date">Date</th>
+                            <th data-i18n="time">Time</th>
+                            <th data-i18n="description_header">Reason</th>
+                            <th data-i18n="report">Report</th>
+                            <th class="text-center" data-i18n="status">Status</th>
+                            <th class="text-center" data-i18n="actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointments-list"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js?v=4.1"></script>
+    <script src="../assets/js/doctor.js?v=4.1"></script>
+</body>
+</body>
+
+</html>
